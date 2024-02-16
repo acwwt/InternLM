@@ -180,10 +180,10 @@ def on_btn_click():
 
 @st.cache_resource
 def load_model():
-    model = (AutoModelForCausalLM.from_pretrained('internlm/internlm2-chat-7b',
+    model = (AutoModelForCausalLM.from_pretrained('https://openxlab.org.cn/models/detail/M1key/mikey_personal_assistant',
                                                   trust_remote_code=True).to(
                                                       torch.bfloat16).cuda())
-    tokenizer = AutoTokenizer.from_pretrained('internlm/internlm2-chat-7b',
+    tokenizer = AutoTokenizer.from_pretrained('https://openxlab.org.cn/models/detail/M1key/mikey_personal_assistant',
                                               trust_remote_code=True)
     return model, tokenizer
 
