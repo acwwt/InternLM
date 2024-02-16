@@ -26,7 +26,7 @@ from torch import nn
 from transformers.generation.utils import (LogitsProcessorList,
                                            StoppingCriteriaList)
 from transformers.utils import logging
-
+from openxlab.model import download
 from transformers import AutoTokenizer, AutoModelForCausalLM  # isort: skip
 
 logger = logging.get_logger(__name__)
@@ -180,10 +180,13 @@ def on_btn_click():
 
 @st.cache_resource
 def load_model():
-    model = (AutoModelForCausalLM.from_pretrained('https://openxlab.org.cn/models/detail/M1key/mikey_personal_assistant/',
+    base_path = './internlm2-chat-7b'
+    # download internlm2 to the base_path directory using SDK
+    download(model_repo='M1key/mikey_personal_assistant',output=base_path)
+    model = (AutoModelForCausalLM.from_pretrained(base_path,
                                                   trust_remote_code=True).to(
                                                       torch.bfloat16).cuda())
-    tokenizer = AutoTokenizer.from_pretrained('https://openxlab.org.cn/models/detail/M1key/mikey_personal_assistant/',
+    tokenizer = AutoTokenizer.from_pretrained(base_path,
                                               trust_remote_code=True)
     return model, tokenizer
 
